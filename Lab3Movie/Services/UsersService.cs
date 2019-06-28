@@ -101,7 +101,7 @@ namespace Lab3Movie.Services
 
         public LoginGetModel Register(RegisterPostModel registerinfo)
         {
-            User existing = context.Users.FirstOrDefault(u => u.Username == registerinfo.Username);
+            User existing = context.Users.FirstOrDefault(u => u.Username == registerinfo.UserName);
 
             if (existing != null)
             {
@@ -113,13 +113,13 @@ namespace Lab3Movie.Services
                 LastName = registerinfo.LastName,
                 FirstName = registerinfo.FirstName,
                 Password = ComputeSha256Hash(registerinfo.Password),
-                Username = registerinfo.Username,
+                Username = registerinfo.UserName,
                 UserRole = UserRole.Regular,
                 DataRegistered = DateTime.Now
 
             });
             context.SaveChanges();
-            return Authenticate(registerinfo.Username, registerinfo.Password);
+            return Authenticate(registerinfo.UserName, registerinfo.Password);
 
         }
 

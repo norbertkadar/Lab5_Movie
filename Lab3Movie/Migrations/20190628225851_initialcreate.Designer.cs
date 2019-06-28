@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab3Movie.Migrations
 {
     [DbContext(typeof(MoviesDbContext))]
-    [Migration("20190607192000_AddCascadeDeleteOwnerForMovie")]
-    partial class AddCascadeDeleteOwnerForMovie
+    [Migration("20190628225851_initialcreate")]
+    partial class initialcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
