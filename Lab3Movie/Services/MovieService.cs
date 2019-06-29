@@ -58,8 +58,8 @@ namespace Lab3Movie.Services
             IQueryable<Movie> result = context
                 .Movies
                 .OrderBy(f => f.Id)
-                .Include(c => c.Comments)
-                .OrderByDescending(m => m.YearOfRelease);
+                .Include(c => c.Comments);
+                
             PaginatedList<MovieGetModel> paginatedResult = new PaginatedList<MovieGetModel>();
             paginatedResult.CurrentPage = page;
 
@@ -106,8 +106,6 @@ namespace Lab3Movie.Services
             context.SaveChanges();
             return toUpdate;
         }
-
-
     }
 
 }

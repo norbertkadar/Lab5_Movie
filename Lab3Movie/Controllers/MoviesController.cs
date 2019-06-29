@@ -68,20 +68,7 @@ namespace Lab3Movie.Controllers
             // TODO: make pagination work with /api/flowers/page/<page number>
             page = Math.Max(page, 1);
             return movieService.GetAll(page, from, to);
-            //IQueryable<Movie> result = context.Movies.Include(c => c.Comments).OrderByDescending(m => m.YearOfRelease);
-            //if (from == null && to == null)
-            //{
-            //    return result;
-            //}
-            //if (from != null)
-            //{
-            //    result = result.Where(m => m.DateAdded >= from);
-            //}
-            //if (to != null)
-            //{
-            //    result = result.Where(m => m.DateAdded <= to);
-            //}
-            //return result;
+         
         }
 
 

@@ -26,5 +26,6 @@ namespace Lab3Movie.Models
         public UserRole UserRole { get; set; }
 
         public DateTime DataRegistered { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

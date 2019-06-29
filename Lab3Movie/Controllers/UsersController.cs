@@ -147,6 +147,36 @@ namespace Lab3Movie.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UserPostModel userPostModel)
         {
+            User curentUserLogIn = _userService.GetCurentUser(HttpContext);
+
+            if (curentUserLogIn.UserRole == UserRole.UserManager)
+            {
+                UserGetModel userToUpdate = _userService.GetById(id);
+
+                var anulUserRegistered = curentUserLogIn.DataRegistered;        //data inregistrarii
+                var curentMonth = DateTime.Now;                                 //data curenta
+                var nrLuni = curentMonth.Subtract(anulUserRegistered).Days / (365.25 / 12);   //diferenta in luni dintre datele transmise
+
+                if (nrLuni >= 6)
+                {
+                    var result3 = _userService.Upsert(id, userPostModel);
+                    return Ok(result3);
+                }
+
+                UserPostModel newUserPost = new UserPostModel
+                {
+                    FirstName = userPostModel.FirstName,
+                    LastName = userPostModel.LastName,
+                    UserName = userPostModel.UserName,
+                    Email = userPostModel.Email,
+                    Password = userPostModel.Password,
+                    UserRole = userToUpdate.UserRole.ToString()
+                };
+
+                var result2 = _userService.Upsert(id, newUserPost);
+                return Ok(result2);
+            }
+
             var result = _userService.Upsert(id, userPostModel);
             return Ok(result);
         }
@@ -164,6 +194,17 @@ namespace Lab3Movie.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            User curentUserLogIn = _userService.GetCurentUser(HttpContext);
+
+            if (curentUserLogIn.UserRole == UserRole.UserManager)
+            {
+                UserGetModel userToDelete = _userService.GetById(id);
+
+                if (userToDelete.UserRole.Equals(UserRole.Admin))
+                {
+                    return NotFound("Nu ai Rolul necear pentru aceaata operatie !");
+                }
+            }
             var result = _userService.Delete(id);
             if (result == null)
             {
